@@ -1,0 +1,12 @@
+.terminContainer {
+    background-color: rgb(102, 102, 213, 0.8);
+    margin: 10px;
+    width: 100%;
+    padding: 10px;
+    max-width: 800px;
+    border-radius: 10px;
+    font-size: 1.2em;
+}
+.terminContainer:hover{
+    background-color: rgb(102, 102, 213);
+}

@@ -3,5 +3,19 @@
 }
 .h1 {
   font: var(--font-mono);
-  font-size: 20px;
+  font-size: 1.2em;
+}
+.button{
+  min-width: 150px;
+  font: var(--font-mono);
+  font-size: 1.2em;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(102, 102, 213, 0.8);
+  border-radius: 10px ;
+  border: 0;
+}
+
+.button:hover{
+  background-color: rgb(102, 102, 213);
 }
