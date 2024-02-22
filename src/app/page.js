@@ -13,7 +13,7 @@ export default function Home() {
     <main>
       <div className={styles.title}>
         <h1 className={styles.h1}>
-          Практика 3 семестр 2023, выполнил Хованский И.А.
+          Практика 4 семестр 2023, выполнил Хованский И.А.
         </h1>
       </div>
       <button onClick={() => setIsGlossary(true)} className={styles.button}>
