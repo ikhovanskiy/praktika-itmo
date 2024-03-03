@@ -10,7 +10,7 @@ jobs:
       - name: Read .nvmrc
         run: |
           echo 'NVM_VERSION<<EOF' >> $GITHUB_ENV
-          cat ./nvmrc>> $GITHUB_ENV
+          cat .nvmrc>> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
         id: nvm
       - name: Use Node.js ${{ env.NVM_VERSION }}
