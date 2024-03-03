@@ -77,6 +77,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+          source "/home/runner/.bashrc"
           yc iam key create --service-account-name service-acc-test --output key.json --folder-id {{ secrets.FOLDER_ID }}
           yc config profile create sa-profile
           yc config set service-account-key key.json
