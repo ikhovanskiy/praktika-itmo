@@ -81,7 +81,7 @@ jobs:
         uses: yc-actions/yc-sls-container-deploy@v2
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          container-name: praktika-itmo-testing
+          container-name: itmo-praktika-testing
           folder-id: b1gv25ei0r6tsb29hlal
           revision-service-account-id: ${{ secrets.SERVICE_ACCOUNT_ID }}
           revision-image-url: cr.yandex/crp21olp4qc3qsmd15s8/praktika-itmo-testing:latest
