@@ -9,6 +9,6 @@ jobs:
         uses: actions/checkout@v4
       - name: instal depandeses
         run: npm i
-      name: lint
+      - name: lint
         run: npm run lint
       - run: echo "🍏 This job's status is ${{ job.status }}."
