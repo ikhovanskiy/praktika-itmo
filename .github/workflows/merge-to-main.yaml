@@ -80,3 +80,4 @@ jobs:
           docker build -f ./deploy/Dockerfile -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest
+          yc serverless container revision deploy --container-id ${{ secrets.SERVERLESS_CONTAINER_ID_TESTING }} --image cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest --service-account-id ${{ secrets.SERVICE_ACCOUNT_ID }}
