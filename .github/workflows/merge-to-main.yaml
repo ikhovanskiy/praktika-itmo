@@ -1,20 +1,15 @@
 name: Merge to main
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} merge to main 🚀
 on: [push]
 jobs:
   lint:
     runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Read .nvmrc
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-        id: nvm
-      - name: Use Node.js ${{ steps.nvm.outputs.NODE_VERSION }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
-      - run: npm i
-      - name: lint
-        run: npm run lint
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+    runs:
+      using: "node20.8.0"
+      steps:
+        - name: Check out repository code
+          uses: actions/checkout@v4
+        - run: npm i
+        - name: lint
+          run: npm run lint
+        - run: echo "🍏 This job's status is ${{ job.status }}."
