@@ -63,11 +63,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: i-khovanskiy/praktika-itmo
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -77,4 +72,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ikhovanskiy/praktika-itmo:latest
