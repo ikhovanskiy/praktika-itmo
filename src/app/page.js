@@ -1,5 +1,6 @@
 "use client";
 import CytoscapeComponent from "react-cytoscapejs";
+import React from "react";
 import styles from "./page.module.css";
 import { targets, termins } from "@/data/data";
 import Glossary from "@/app/components/Glossary";
