@@ -17,7 +17,42 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NVM_VERSION }}
-      - run: npm i
-      - name: lint
+      - run: npm ci
+      - name: check lint
         run: npm run lint
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Read .nvmrc
+        run: |
+          echo 'NVM_VERSION<<EOF' >> $GITHUB_ENV
+          cat .nvmrc>> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+        id: nvm
+      - name: Use Node.js ${{ env.NVM_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NVM_VERSION }}
+      - run: npm ci
+      - name: testing...
+        run: npm run test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Read .nvmrc
+        run: |
+          echo 'NVM_VERSION<<EOF' >> $GITHUB_ENV
+          cat .nvmrc>> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+        id: nvm
+      - name: Use Node.js ${{ env.NVM_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NVM_VERSION }}
+      - run: npm ci
+      - name: building...
+        run: npm run build
