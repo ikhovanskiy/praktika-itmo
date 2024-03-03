@@ -72,4 +72,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ikhovanskiy/praktika-itmo:latest, ikhovanskiy/praktika-itmo:${{ github.event.inputs.version || github.event.client_payload.version }}
+          tags: ikhovanskiy/praktika-itmo:${{ github.event.inputs.version || github.event.client_payload.version }}, ikhovanskiy/praktika-itmo:latest
