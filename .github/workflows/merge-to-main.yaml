@@ -8,9 +8,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: instal depandeses
-        run: |
-          nvm use || nvm install
-          npm i
+        run: npm i
       name: lint
         run: npm run lint
       - run: echo "🍏 This job's status is ${{ job.status }}."
