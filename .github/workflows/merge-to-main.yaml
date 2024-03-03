@@ -7,13 +7,14 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: instal depandeses
-        run: |
-          nvm install
-        shell: "bash -eo pipefail --login {0}"
-      - run: |
-          nvm use
-          npm i
+      - name: Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+      - name: Use Node.js ${{ steps.nvm.outputs.NODE_VERSION }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
+      - run: npm i
       - name: lint
         run: npm run lint
       - run: echo "🍏 This job's status is ${{ job.status }}."
