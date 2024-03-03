@@ -76,4 +76,8 @@ jobs:
           CR_REPOSITORY: praktika-itmo-testing
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+          yc iam key create --service-account-name service-acc-test --output key.json --folder-id {{ secrets.FOLDER_ID }}
+          yc config profile create sa-profile
+          yc config set service-account-key key.json
           yc serverless container revision deploy --container-id ${{ secrets.SERVERLESS_CONTAINER_ID_TESTING }} --image cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest --service-account-id ${{ secrets.SERVICE_ACCOUNT_ID }}
