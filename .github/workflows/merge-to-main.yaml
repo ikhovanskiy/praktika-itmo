@@ -65,19 +65,6 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Read .nvmrc
-        run: |
-          echo 'NVM_VERSION<<EOF' >> $GITHUB_ENV
-          cat .nvmrc>> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-        id: nvm
-      - name: Use Node.js ${{ env.NVM_VERSION }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NVM_VERSION }}
-      - run: npm i
-      - name: building...
-        run: npm run build
       - name: Login to Yandex Cloud Container Registry
         id: login-cr
         uses: yc-actions/yc-cr-login@v2
