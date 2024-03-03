@@ -14,7 +14,7 @@ export default function Home() {
     <main>
       <div className={styles.title}>
         <h1 className={styles.h1}>
-          Практика 4 семестр 2024, выполнил Хованский И.А. v1.0.0
+          Практика 4 семестр 2024, выполнил Хованский И.А. v1.0.1
         </h1>
       </div>
       <button onClick={() => setIsGlossary(true)} className={styles.button}>
