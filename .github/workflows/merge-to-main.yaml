@@ -1,6 +1,9 @@
 name: Merge to main
 run-name: ${{ github.actor }} merge to main 🚀
-on: [push]
+on:
+  push:
+    branches:
+      - "main"
 jobs:
   lint:
     runs-on: ubuntu-latest
