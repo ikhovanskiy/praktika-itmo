@@ -7,16 +7,31 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    needs: [build]
+    env:
+      CR_REGISTRY: ${{ secrets.CR_REGISTRY }}
+      CR_REPOSITORY: praktika-itmo-prod
+      IMAGE_TAG: ${{ github.sha }}
     steps:
-      - name: Checkout
+      - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
+      - name: Login to Yandex Cloud Container Registry
+        id: login-cr
+        uses: yc-actions/yc-cr-login@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v5
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+      - name: Build, tag, and push image to Yandex Cloud Container Registry
+        run: |
+          docker build -f ./deploy/Dockerfile -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+          docker build -f ./deploy/Dockerfile -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest .
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest
+      - name: Deploy Serverless Container
+        id: deploy-sls-container
+        uses: yc-actions/yc-sls-container-deploy@v2
         with:
-          push: true
-          tags: ikhovanskiy/praktika-itmo-prod:${{ github.sha }}, ikhovanskiy/praktika-itmo-prod:latest
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+          container-name: itmo-praktika-prod
+          folder-id: ${{ secrets.FOLDER_ID }}
+          revision-service-account-id: ${{ secrets.SERVICE_ACCOUNT_ID }}
+          revision-image-url: cr.yandex/${{ secrets.CR_REGISTRY }}/praktika-itmo-prod:latest
