@@ -63,7 +63,7 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     env:
-      CR_REGISTRY: crp21olp4qc3qsmd15s8
+      CR_REGISTRY: ${{ secrets.CR_REGISTRY }}
       CR_REPOSITORY: praktika-itmo-testing
       IMAGE_TAG: ${{ github.sha }}
     steps:
@@ -86,6 +86,6 @@ jobs:
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           container-name: itmo-praktika-testing
-          folder-id: b1gv25ei0r6tsb29hlal
+          folder-id: ${{ secrets.FOLDER_ID }}
           revision-service-account-id: ${{ secrets.SERVICE_ACCOUNT_ID }}
-          revision-image-url: cr.yandex/crp21olp4qc3qsmd15s8/praktika-itmo-testing:latest
+          revision-image-url: cr.yandex/${{ secrets.CR_REGISTRY }}/praktika-itmo-testing:latest
