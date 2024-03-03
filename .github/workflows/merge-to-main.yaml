@@ -81,6 +81,10 @@ jobs:
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest
       - name: Deploy Serverless Container
+        env:
+          CR_REGISTRY: crp21olp4qc3qsmd15s8
+          CR_REPOSITORY: praktika-itmo-testing
+          IMAGE_TAG: ${{ github.sha }}
         id: deploy-sls-container
         uses: yc-actions/yc-sls-container-deploy@v2
         with:
