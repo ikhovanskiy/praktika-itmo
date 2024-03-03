@@ -62,6 +62,10 @@ jobs:
         run: npm run build
   docker:
     runs-on: ubuntu-latest
+    env:
+      CR_REGISTRY: crp21olp4qc3qsmd15s8
+      CR_REPOSITORY: praktika-itmo-testing
+      IMAGE_TAG: ${{ github.sha }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -70,11 +74,13 @@ jobs:
         uses: yc-actions/yc-cr-login@v2
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+      - name: Build, tag, and push image to Yandex Cloud Container Registry
+        run: |
+          docker build -f ./deploy/Dockerfile -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+          docker build -f ./deploy/Dockerfile -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest .
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest
       - name: Deploy Serverless Container
-        env:
-          CR_REGISTRY: crp21olp4qc3qsmd15s8
-          CR_REPOSITORY: praktika-itmo-testing
-          IMAGE_TAG: ${{ github.sha }}
         id: deploy-sls-container
         uses: yc-actions/yc-sls-container-deploy@v2
         with:
@@ -82,4 +88,4 @@ jobs:
           container-name: itmo-praktika-testing
           folder-id: b1gv25ei0r6tsb29hlal
           revision-service-account-id: ${{ secrets.SERVICE_ACCOUNT_ID }}
-          revision-image-url: cr.yandex/crp21olp4qc3qsmd15s8/praktika-itmo-testing:latest
+          revision-image-url: cr.yandex/{{ env.CR_REGISTRY }}/{{ env.CR_REPOSITORY }}:latest
