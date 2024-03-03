@@ -75,11 +75,13 @@ jobs:
           CR_REGISTRY: crp21olp4qc3qsmd15s8
           CR_REPOSITORY: praktika-itmo-testing
           IMAGE_TAG: ${{ github.sha }}
-        run: |
-          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
-          source "/home/runner/.bashrc"
-          echo 'source /home/runner/yandex-cloud/completion.zsh.inc' >>  ~/.zshrc
-          yc iam key create --service-account-name service-acc-test --output key.json --folder-id {{ secrets.FOLDER_ID }}
-          yc config profile create sa-profile
-          yc config set service-account-key key.json
-          yc serverless container revision deploy --container-id ${{ secrets.SERVERLESS_CONTAINER_ID_TESTING }} --image cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest --service-account-id ${{ secrets.SERVICE_ACCOUNT_ID }}
+        run: echo 'hello'
+      - name: Deploy Serverless Container
+        id: deploy-sls-container
+        uses: yc-actions/yc-sls-container-deploy@v2
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+          container-name: praktika-itmo-testing
+          folder-id: ${{ secrets.FOLDER_ID }}
+          revision-service-account-id: ${{ secrets.SERVICE_ACCOUNT_ID }}
+          revision-image-url: cr.yandex/crp21olp4qc3qsmd15s8/praktika-itmo-testing:latest
