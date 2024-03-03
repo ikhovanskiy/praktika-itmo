@@ -4,12 +4,17 @@ on: [push]
 jobs:
   lint:
     runs-on: ubuntu-latest
-    runs:
-      using: "node20.8.0"
-      steps:
-        - name: Check out repository code
-          uses: actions/checkout@v4
-        - run: npm i
-        - name: lint
-          run: npm run lint
-        - run: echo "🍏 This job's status is ${{ job.status }}."
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+      - name: Use Node.js ${{ steps.nvm.outputs.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
+      - run: npm i
+      - name: lint
+        run: npm run lint
+      - run: echo "🍏 This job's status is ${{ job.status }}."
